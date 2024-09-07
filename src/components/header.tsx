@@ -49,7 +49,7 @@ export const Header: React.FC = () => {
   }, []);
 
   return (
-    <header className="bg-purple-600 text-white fixed top-0 left-0 w-full z-50 h-16 flex items-center px-4">
+    <header className="bg-blue-400 text-white fixed top-0 left-0 w-full z-50 h-16 flex items-center px-4">
       <div className="container mx-auto flex justify-between items-center h-full">
         <div className="text-2xl font-bold">
           <Link href='/'>Chrysalis</Link>
@@ -71,7 +71,7 @@ export const Header: React.FC = () => {
                 filteredDishes.map((dish, index) => (
                   <div
                     key={index}
-                    className="p-2 hover:bg-purple-200 cursor-pointer"
+                    className="p-2 hover:bg-blue-200 cursor-pointer"
                     onClick={() => {
                       setSearchTerm(dish);
                       setShowResults(false);
