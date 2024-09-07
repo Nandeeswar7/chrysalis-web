@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { GetServerSideProps, NextPage } from 'next';
-import { Dish } from '@/types';
-import Pagination from '@/components/Pagination';
+import { DishType } from '@/types';
+import Pagination from '@/components/pagination';
 
 interface DishesPageProps {
-  dishes: Dish[];
+  dishes: DishType[];
 }
 
-const uniqueValues = (array: string[]) => Array.from(new Set(array));
+const uniqueValues = (array: string[]) => Array.from(new Set(array)).filter(value => value !== 'unknown');
 
 const Dishes: NextPage<DishesPageProps> = ({ dishes }) => {
-  const [filteredDishes, setFilteredDishes] = useState<Dish[]>(dishes)
+  const [filteredDishes, setFilteredDishes] = useState<DishType[]>(dishes)
   const [dietFilter, setDietFilter] = useState<string>('');
   const [flavorFilter, setFlavorFilter] = useState<string>('');
   const [stateFilter, setStateFilter] = useState<string>('');
@@ -106,7 +106,7 @@ const Dishes: NextPage<DishesPageProps> = ({ dishes }) => {
                       <div className="text-blue-500 hover:underline cursor-pointer">{dish.name}</div>
                     </Link>
                   </td>
-                  <td className="p-4">{dish.ingredients}</td>
+                  <td className="p-4">{dish.ingredients.join(', ')}</td>
                   <td className="p-4 hidden md:table-cell">{dish.diet}</td>
                   <td className="p-4 hidden md:table-cell">{dish.prep_time}</td>
                   <td className="p-4 hidden md:table-cell">{dish.cook_time}</td>

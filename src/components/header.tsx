@@ -1,32 +1,29 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { DishType } from '@/types';
 
+type SearchResultType = Pick<DishType,'id'|'name'>
 export const Header: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredDishes, setFilteredDishes] = useState<string[]>([]);
+  const [filteredDishes, setFilteredDishes] = useState<SearchResultType[]>([]);
   const [showResults, setShowResults] = useState(false);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
-  const dishes = [
-    'Biryani',
-    'Masala Dosa',
-    'Paneer Butter Masala',
-    'Chicken Curry',
-    'Samosa',
-    'Gulab Jamun',
-    'Rogan Josh',
-    'Butter Chicken',
-  ];
+  // Fetch dishes from API (example URL)
+  const fetchDishes = async (query: string) => {
+    const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+    const data = await response.json();
+    setFilteredDishes(data);
+    setShowResults(data.length > 0);
+  };
 
-  // Filter dishes based on the search term
+  // Handle search term change
   useEffect(() => {
     if (searchTerm) {
-      const results = dishes.filter((dish) =>
-        dish.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setFilteredDishes(results);
-      setShowResults(true);
+      fetchDishes(searchTerm);
     } else {
       setFilteredDishes([]);
       setShowResults(false);
@@ -49,10 +46,10 @@ export const Header: React.FC = () => {
   }, []);
 
   return (
-    <header className="bg-blue-400 text-white fixed top-0 left-0 w-full z-50 h-16 flex items-center px-4">
+    <header className="bg-blue-500 text-white fixed top-0 left-0 w-full z-50 h-16 flex items-center px-4">
       <div className="container mx-auto flex justify-between items-center h-full">
         <div className="text-2xl font-bold">
-          <Link href='/'>Chrysalis</Link>
+          <Link href="/">Chrysalis</Link>
         </div>
         <div className="relative" ref={searchRef}>
           <input
@@ -68,17 +65,18 @@ export const Header: React.FC = () => {
           {showResults && (
             <div className="absolute bg-white text-black mt-12 w-full max-h-40 overflow-y-auto rounded-md shadow-lg z-10">
               {filteredDishes.length > 0 ? (
-                filteredDishes.map((dish, index) => (
+                filteredDishes.map((dish) => (
                   <div
-                    key={index}
+                    key={dish.id}
                     className="p-2 hover:bg-blue-200 cursor-pointer"
                     onClick={() => {
-                      setSearchTerm(dish);
+                      setSearchTerm(dish.name);
                       setShowResults(false);
                       setIsSearchFocused(false); // Shrink box on selection
+                      void router.push(`/dishes/${dish.id}`); // Redirect to dish details page
                     }}
                   >
-                    {dish}
+                    {dish.name}
                   </div>
                 ))
               ) : (
