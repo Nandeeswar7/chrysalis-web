@@ -17,7 +17,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     const { ingredients } = validatedBody.data;
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dishes-by-ingredients`, {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api'
+    const response = await fetch(`${apiUrl}/dishes-by-ingredients`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

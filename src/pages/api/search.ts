@@ -7,7 +7,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(400).json({ message: 'Query parameter is required' });
         }
         
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/search?q=${encodeURIComponent(q)}`);
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api'
+        const response = await fetch(`${apiUrl}/search?q=${encodeURIComponent(q)}`);
 
         if (!response.ok) {
             throw new Error(`Failed to fetch data: ${response.statusText}`);
