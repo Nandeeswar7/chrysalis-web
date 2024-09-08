@@ -13,7 +13,7 @@ const Home: React.FC = () => {
             Explore Dishes
           </span>
         </Link>
-        <Link href="/suggestions">
+        <Link href="/dishes-by-ingredients">
           <span className="bg-blue-500 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-500 transition-colors cursor-pointer text-center">
             Cook With What You Have
           </span>

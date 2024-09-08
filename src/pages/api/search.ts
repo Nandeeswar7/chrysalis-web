@@ -1,15 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const { q } = req.query;
-    console.log()
-    if (typeof q !== 'string') {
-        return res.status(400).json({ message: 'Query parameter is required' });
-    }
-
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/search?q=${encodeURIComponent(q)}`);
+        const { q } = req.query;
+        if (typeof q !== 'string') {
+            return res.status(400).json({ message: 'Query parameter is required' });
+        }
         
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/search?q=${encodeURIComponent(q)}`);
+
         if (!response.ok) {
             throw new Error(`Failed to fetch data: ${response.statusText}`);
         }
