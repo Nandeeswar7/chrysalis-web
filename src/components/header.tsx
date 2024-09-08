@@ -70,7 +70,7 @@ export const Header: React.FC = () => {
                     key={dish.id}
                     className="p-2 hover:bg-blue-200 cursor-pointer"
                     onClick={() => {
-                      setSearchTerm(dish.name);
+                      setSearchTerm('');
                       setShowResults(false);
                       setIsSearchFocused(false); // Shrink box on selection
                       void router.push(`/dishes/${dish.id}`); // Redirect to dish details page

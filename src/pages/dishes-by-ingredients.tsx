@@ -28,7 +28,7 @@ const IngredientsPage: NextPage<PageProps> = ({ allIngredients }) => {
       const data = await response.json();
       setDishes(data);
     } catch (error) {
-      console.error(error)
+      console.error(error);
       setError('An unknown error occurred');
     }
   };
@@ -96,34 +96,43 @@ const IngredientsPage: NextPage<PageProps> = ({ allIngredients }) => {
                 </label>
               ))
             ) : (
-              <p className="text-gray-600">No ingredients match your search.</p>
+              <p className="text-gray-600">No ingredients match your search</p>
             )}
           </div>
         </div>
 
         {/* Dishes Section */}
-        <div className="md:col-span-2 bg-white p-6 shadow-md rounded-lg">
-          <h2 className="text-xl font-semibold mb-4">Dishes Based on Selected Ingredients</h2>
-          {error ? (
-            <p className="text-red-600">{error}</p>
-          ) : dishes.length > 0 ? (
-            <div className="space-y-4">
-              {dishes.map(dish => (
-                <div key={dish.id} className="border rounded-lg p-4 shadow-md">
-                  <h3 className="text-lg font-semibold">
-                    <Link href={`/dishes/${dish.id}`}>
-                      <span className="text-blue-600 hover:underline">{dish.name}</span>
-                    </Link>
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    Ingredients: {dish.ingredients?.join(', ')}
-                  </p>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-gray-600">No dishes found for the selected ingredients.</p>
-          )}
+        <div className="md:col-span-2 bg-white p-6 shadow-md rounded-lg flex flex-col justify-between">
+          <div>
+            <h2 className="text-xl font-semibold mb-4">Dishes You Can Cook With Selected Ingredients</h2>
+            {error ? (
+              <p className="text-red-600">{error}</p>
+            ) : dishes.length > 0 ? (
+              <div className="space-y-4">
+                {dishes.map(dish => (
+                  <div key={dish.id} className="border rounded-lg p-4 shadow-md">
+                    <h3 className="text-lg font-semibold">
+                      <Link href={`/dishes/${dish.id}`}>
+                        <span className="text-blue-600 hover:underline">{dish.name}</span>
+                      </Link>
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                      Ingredients: {dish.ingredients?.join(', ')}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center flex flex-col items-center justify-center h-full">
+                <p className="text-gray-600 mb-4">No dishes found for the selected ingredients. Try selecting more.</p>
+                <Link href="/dishes">
+                  <span className="px-4 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-300">
+                    View All Dishes
+                  </span>
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
