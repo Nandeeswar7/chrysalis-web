@@ -7,14 +7,14 @@ cd chrysalis-web
 ```
 
 ### 2. Create .env.local file
-This step can be skipped if backend application is running on PORT 4000
+This step can be skipped if backend application is running on PORT 4000.
 
-Create .env.local file in the root directory of the project
+Create .env.local file in the root directory of the project.  
 Configure backend server URL
 ```
 NEXT_PUBLIC_API_URL='http://localhost:4000/api'
 ```
-If backend application is running on a different PORT, Replace 4000 in the URL with actual PORT number
+If backend application is running on a different PORT, Replace 4000 in the URL with actual PORT number.
 
 ### 3. Install dependencies
 ```
